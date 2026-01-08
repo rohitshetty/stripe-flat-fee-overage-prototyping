@@ -135,7 +135,10 @@ function DashboardContent() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 rounded-full border-2 border-forest-200 border-t-forest-600 animate-spin" />
+          <span className="font-body text-charcoal-400">Loading your dashboard...</span>
+        </div>
       </div>
     )
   }
@@ -143,7 +146,12 @@ function DashboardContent() {
   if (!status) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-red-500">Failed to load data</div>
+        <div className="card-ledger p-8 text-center">
+          <svg className="w-12 h-12 mx-auto mb-4 text-burgundy-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+          </svg>
+          <p className="font-body text-charcoal-600">Failed to load data</p>
+        </div>
       </div>
     )
   }
@@ -159,17 +167,29 @@ function DashboardContent() {
         />
       )}
 
-      <div className="max-w-4xl mx-auto p-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        {/* Header */}
+        <header className="flex justify-between items-center mb-12 opacity-0 animate-fade-in">
+          <div>
+            <h1 className="font-display text-4xl font-semibold text-forest-800 tracking-tight">
+              Dashboard
+            </h1>
+            <p className="font-body text-charcoal-500 mt-1">
+              Manage your credits and subscription
+            </p>
+          </div>
           <Link
             href="/subscription"
-            className="text-sm text-primary-600 hover:text-primary-700"
+            className="btn-ghost group flex items-center gap-2"
           >
-            Manage Subscription →
+            <span>Manage Subscription</span>
+            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </Link>
-        </div>
+        </header>
 
+        {/* Main Grid */}
         <div className="grid md:grid-cols-2 gap-6">
           <CreditDisplay
             subscriptionCredits={status.credits.subscription}
@@ -194,6 +214,19 @@ function DashboardContent() {
 
           <ActivityLog entries={history} limit={5} />
         </div>
+
+        {/* Footer */}
+        <footer className="mt-16 pt-8 border-t border-charcoal-100 opacity-0 animate-fade-in stagger-6">
+          <div className="flex justify-between items-center text-charcoal-400">
+            <p className="font-body text-xs">
+              Ledger Credit Management
+            </p>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 rounded-full bg-forest-400 animate-pulse" />
+              <span className="font-body text-xs">All systems operational</span>
+            </div>
+          </div>
+        </footer>
       </div>
 
       {toast && (
@@ -211,7 +244,10 @@ export default function Dashboard() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 rounded-full border-2 border-forest-200 border-t-forest-600 animate-spin" />
+          <span className="font-body text-charcoal-400">Loading...</span>
+        </div>
       </div>
     }>
       <DashboardContent />

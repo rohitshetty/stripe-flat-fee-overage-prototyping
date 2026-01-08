@@ -12,36 +12,44 @@ export function CreditDisplay({
   totalCredits,
 }: CreditDisplayProps) {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
-      <h2 className="text-lg font-medium text-gray-900 mb-4">Credit Balance</h2>
+    <div className="card-ledger corner-flourish p-6 opacity-0 animate-slide-up stagger-1">
+      <h2 className="section-header mb-6">Credit Balance</h2>
 
-      <div className="text-center mb-6">
-        <span className="text-5xl font-bold text-gray-900">{totalCredits}</span>
-        <span className="text-gray-500 ml-2">credits</span>
+      <div className="mb-8">
+        <div className="flex items-baseline gap-3">
+          <span className="display-number">{totalCredits}</span>
+          <span className="font-body text-charcoal-400 tracking-wide">credits available</span>
+        </div>
+        <div className="mt-2 h-1 w-24 bg-gradient-to-r from-brass-400 to-brass-200 rounded-full" />
       </div>
 
       <div className="space-y-3">
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Subscription credits</span>
-          <span className="font-medium text-gray-900">{subscriptionCredits}</span>
+        <div className="flex justify-between items-center py-2 border-b border-charcoal-100">
+          <span className="font-body text-sm text-charcoal-500">Subscription</span>
+          <span className="font-mono text-sm font-medium text-forest-800">{subscriptionCredits}</span>
         </div>
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Add-on credits</span>
-          <span className="font-medium text-gray-900">{addonCredits}</span>
+        <div className="flex justify-between items-center py-2">
+          <span className="font-body text-sm text-charcoal-500">Add-on</span>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-sm font-medium text-forest-800">{addonCredits}</span>
+            {addonCredits > 0 && (
+              <span className="badge badge-brass text-[10px]">permanent</span>
+            )}
+          </div>
         </div>
       </div>
 
       {totalCredits <= 2 && totalCredits > 0 && (
-        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md">
-          <p className="text-sm text-amber-800">
-            Low credits! Consider purchasing an add-on pack.
+        <div className="mt-6 notice-warning">
+          <p className="font-body text-sm text-brass-800">
+            Running low on credits. Consider purchasing an add-on pack.
           </p>
         </div>
       )}
 
       {totalCredits === 0 && (
-        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-sm text-red-800">
+        <div className="mt-6 notice-danger">
+          <p className="font-body text-sm text-burgundy-800">
             No credits remaining. Purchase add-ons to continue.
           </p>
         </div>
