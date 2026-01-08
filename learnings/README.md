@@ -1,32 +1,29 @@
 # Learnings
 
-Documentation and essays exploring the architecture, tradeoffs, and edge cases of building a credit-based subscription system with Stripe.
+Documentation and essays exploring subscription architectures with Stripe. This directory contains two approaches:
 
-## Contents
+## Directory Structure
 
-### Architecture & Design
+### [Custom Entitlement](./custom-entitlement/)
+The traditional approach: Your application manages credits/entitlements locally, with Stripe handling payments only.
 
-| Document | Description |
-|----------|-------------|
-| [Why Your App Must Handle Credits, Not Stripe](./why-app-handles-credits-not-stripe.md) | Explains why Stripe is a billing system, not an entitlement system. Covers the prepaid vs post-paid distinction, what Stripe's features actually do, and why credit enforcement must live in your application. |
-| [The Dance Between Stripe and Your Application](./how-stripe-and-custom-code-work-together.md) | A narrative essay (Dan Shipper style) on how the system works end-to-end—webhooks, credit allocation, consumption logic, renewals, and the tradeoffs we made. |
-| [Stripe Credits vs. Local Credits](./stripe-credits-vs-local-credits.md) | Deep comparison of Stripe's native Credits feature vs. our local implementation. Walks through how we'd implement using Stripe Credits, why it doesn't fit prepaid enforcement models, and what each approach does and doesn't do. |
-| [Implementing a Credit-Based Subscription System](./stripe-credits-implementation-notes.md) | A practical implementation guide (Simon Willison style) with code snippets, gotchas encountered, CLI testing commands, and production considerations. |
+- **Why Your App Must Handle Credits, Not Stripe** — Explains the prepaid vs post-paid distinction
+- **The Dance Between Stripe and Your Application** — End-to-end system narrative
+- **Stripe Credits vs. Local Credits** — Comparison of Stripe's Credits feature vs local implementation
+- **Implementation Notes** — Practical guide with code snippets
+- **Corner Cases** — 10 edge cases that break most implementations
 
-### Edge Cases & Scenarios
+### [Stripe Native](./stripe-native/)
+The Stripe-native approach: Let Stripe handle everything through Meters and usage-based billing.
 
-| Document | Description |
-|----------|-------------|
-| [The Corner Cases That Will Break Your Subscription System](./subscription-corner-cases.md) | Catalogs 10 edge cases that trip up most implementations: cancellation timing, upgrade proration, failed payments, renewal gaps, trial expiration, and more. Each with concrete examples and solutions. |
+- **The Elegant Simplicity of Letting Stripe Do Its Job** — Architecture essay on Stripe-native implementation
 
-## Quick Reference
+## Quick Comparison
 
-**The core insight:** Stripe handles money (payments, subscriptions, invoices). Your app handles meaning (what a payment means in credits, when users can act, expiration rules).
-
-**The bridge:** Webhooks. Stripe sends events like `invoice.paid`, your app translates them into credit operations.
-
-**Key files:**
-- [`lib/credits.ts`](../lib/credits.ts) — Credit consumption, allocation, expiration
-- [`lib/subscriptions.ts`](../lib/subscriptions.ts) — Subscription state management
-- [`app/api/webhooks/stripe/route.ts`](../app/api/webhooks/stripe/route.ts) — Webhook handler
-- [`lib/constants.ts`](../lib/constants.ts) — Tier definitions, price ID mappings
+| Aspect | Custom Entitlement | Stripe Native |
+|--------|-------------------|---------------|
+| **Model** | Prepaid (credits) | Post-paid (usage) |
+| **Blocking** | Users blocked at 0 credits | Never blocked |
+| **Complexity** | ~300 lines credit logic | ~50 lines meter integration |
+| **Source of Truth** | Local database | Stripe Meters |
+| **Overages** | Require addon purchase | Automatic, billed at cycle end |

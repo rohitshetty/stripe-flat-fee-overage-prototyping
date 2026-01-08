@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "db:init": "npx tsx scripts/init-db.ts",
+    "db:init-native": "npx tsx scripts/init-native-db.ts",
+    "db:init-all": "npx tsx scripts/init-db.ts && npx tsx scripts/init-native-db.ts",
     "stripe:setup": "npx tsx scripts/setup-stripe.ts",
+    "stripe:setup-native": "npx tsx scripts/setup-stripe-native.ts",
     "cli": "npx tsx cli/index.ts"
   },
   "dependencies": {

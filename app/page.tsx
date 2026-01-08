@@ -171,22 +171,28 @@ function DashboardContent() {
         {/* Header */}
         <header className="flex justify-between items-center mb-12 opacity-0 animate-fade-in">
           <div>
-            <h1 className="font-display text-4xl font-semibold text-forest-800 tracking-tight">
-              Dashboard
-            </h1>
-            <p className="font-body text-charcoal-500 mt-1">
+            <div className="flex items-center gap-3 mb-1">
+              <h1 className="font-display text-4xl font-semibold text-forest-800 tracking-tight">
+                Dashboard
+              </h1>
+              <span className="badge badge-forest">Pre-Pay</span>
+            </div>
+            <p className="font-body text-charcoal-500">
               Manage your credits and subscription
             </p>
           </div>
-          <Link
-            href="/subscription"
-            className="btn-ghost group flex items-center gap-2"
-          >
-            <span>Manage Subscription</span>
-            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/subscription" className="btn-ghost">
+              Subscription
+            </Link>
+            <span className="text-charcoal-300">|</span>
+            <Link href="/native" className="btn-ghost">
+              Native
+            </Link>
+            <Link href="/compare" className="btn-secondary">
+              Compare
+            </Link>
+          </div>
         </header>
 
         {/* Main Grid */}
