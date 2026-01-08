@@ -10,6 +10,7 @@ Documentation and essays exploring the architecture, tradeoffs, and edge cases o
 |----------|-------------|
 | [Why Your App Must Handle Credits, Not Stripe](./why-app-handles-credits-not-stripe.md) | Explains why Stripe is a billing system, not an entitlement system. Covers the prepaid vs post-paid distinction, what Stripe's features actually do, and why credit enforcement must live in your application. |
 | [The Dance Between Stripe and Your Application](./how-stripe-and-custom-code-work-together.md) | A narrative essay (Dan Shipper style) on how the system works end-to-end—webhooks, credit allocation, consumption logic, renewals, and the tradeoffs we made. |
+| [Stripe Credits vs. Local Credits](./stripe-credits-vs-local-credits.md) | Deep comparison of Stripe's native Credits feature vs. our local implementation. Walks through how we'd implement using Stripe Credits, why it doesn't fit prepaid enforcement models, and what each approach does and doesn't do. |
 | [Implementing a Credit-Based Subscription System](./stripe-credits-implementation-notes.md) | A practical implementation guide (Simon Willison style) with code snippets, gotchas encountered, CLI testing commands, and production considerations. |
 
 ### Edge Cases & Scenarios
